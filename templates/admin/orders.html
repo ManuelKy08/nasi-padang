@@ -1,0 +1,68 @@
+{{define "content"}}
+<section class="admin-page">
+  <div class="admin-head">
+    <div>
+      <span class="eyebrow">Admin</span>
+      <h1>Semua Pesanan</h1>
+    </div>
+    <nav class="admin-tabs">
+      <a href="/admin">Ringkasan</a>
+      <a href="/admin/menu">Menu</a>
+      <a href="/admin/orders" class="active">Pesanan</a>
+      <a href="/admin/users">Pengguna</a>
+      <a href="/admin/reports">Laporan</a>
+    </nav>
+  </div>
+
+  <div class="filter-row">
+    {{range .Filters}}
+    <a href="/admin/orders?status={{.}}" class="chip {{if eq $.Status .}}active{{end}}">{{if eq . "all"}}SEMUA{{else}}{{statusLabel .}}{{end}}</a>
+    {{end}}
+  </div>
+
+  <div class="panel">
+    {{if .Orders}}
+    <div class="table-scroll">
+      <table class="table orders-table">
+        <thead><tr><th>Pesanan</th><th>Pelanggan</th><th>Tipe</th><th>Total</th><th>Status</th><th class="t-actions">Aksi</th></tr></thead>
+        <tbody>
+          {{range .Orders}}
+          <tr>
+            <td>
+              <a href="/orders/{{.ID}}" class="oc-number">{{.OrderNumber}}</a>
+              <small class="muted">{{datetime .CreatedAt}}</small>
+            </td>
+            <td>{{.UserName}}</td>
+            <td>{{orderTypeLabel .OrderType}}{{if .TableNumber}} · Meja {{.TableNumber}}{{end}}</td>
+            <td><strong>{{rupiah .Total}}</strong></td>
+            <td>
+              <select class="status-select" data-status="{{.ID}}" data-order="{{.OrderNumber}}">
+                <option value="pending" {{if eq .Status "pending"}}selected{{end}}>Pesanan Dibuat</option>
+                <option value="processing" {{if eq .Status "processing"}}selected{{end}}>Diproses</option>
+                <option value="cooking" {{if eq .Status "cooking"}}selected{{end}}>Dimasak</option>
+                <option value="ready" {{if eq .Status "ready"}}selected{{end}}>Siap</option>
+                <option value="delivering" {{if eq .Status "delivering"}}selected{{end}}>Diantar</option>
+                <option value="served" {{if eq .Status "served"}}selected{{end}}>Disajikan</option>
+                <option value="completed" {{if eq .Status "completed"}}selected{{end}}>Selesai</option>
+                <option value="cancelled" {{if eq .Status "cancelled"}}selected{{end}}>Dibatalkan</option>
+              </select>
+            </td>
+            <td class="t-actions">
+              <div class="row-actions">
+                <form method="POST" action="/admin/orders/{{.ID}}/delete" data-confirm="Hapus {{.OrderNumber}}?">
+                  <input type="hidden" name="csrf_token" value="{{$.CSRF}}">
+                  <button class="icon-btn sm danger" title="Hapus">🗑</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {{end}}
+        </tbody>
+      </table>
+    </div>
+    {{else}}
+    <div class="empty-state"><p>Tidak ada pesanan.</p></div>
+    {{end}}
+  </div>
+</section>
+{{end}}

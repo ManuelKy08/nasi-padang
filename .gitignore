@@ -1,0 +1,4 @@
+/rantau-app
+*.log
+.env
+*.html.bak

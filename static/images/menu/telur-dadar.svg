@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff8ec"/>
+      <stop offset="1" stop-color="#f3ead9"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#g)"/>
+  <g stroke="#c2953f" stroke-width="2" fill="none" opacity="0.35" stroke-linecap="round">
+    <path d="M25 268 L70 40 L115 268 L160 40 L205 268 L250 40 L295 268 L340 40 L372 268"/>
+    <path d="M25 282 C50 268 80 268 105 282 C125 270 155 270 180 282 C200 270 230 270 255 282 C275 272 305 272 330 282 C345 275 360 275 372 282"/>
+  </g>
+  <circle cx="200" cy="140" r="72" fill="#ffffff" opacity="0.92"/>
+  <text x="200" y="172" font-size="72" text-anchor="middle">🧈</text>
+  <text x="200" y="252" font-family="Georgia, serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#7a1b16" letter-spacing="2">TELUR DADAR</text>
+  <text x="200" y="36" font-family="Georgia, serif" font-size="12" text-anchor="middle" fill="#c2953f" letter-spacing="4">RANTAU</text>
+</svg>

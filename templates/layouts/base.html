@@ -1,0 +1,50 @@
+{{define "base"}}<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="csrf" content="{{.CSRF}}">
+  <meta name="theme-color" content="#7a1b16">
+  <link rel="icon" href="/static/images/favicon.svg" type="image/svg+xml">
+  <title>{{if .PageTitle}}{{.PageTitle}} · {{end}}RANTAU — Rumah Makan Padang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/menu.css">
+  <link rel="stylesheet" href="/static/css/dashboard.css">
+  <link rel="stylesheet" href="/static/css/admin.css">
+  {{block "styles" .}}{{end}}
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('rantau-theme');
+        var theme = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+        var mt = document.querySelector('meta[name="theme-color"]');
+        if (mt) mt.setAttribute('content', theme === 'dark' ? '#140d0b' : '#7a1b16');
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Langsung ke konten</a>
+  <div id="page">
+    {{template "navbar" .}}
+    <main id="main">
+      {{template "content" .}}
+    </main>
+    {{template "footer" .}}
+  </div>
+
+  {{template "mobileNav" .}}
+  {{template "cartdrawer" .}}
+  {{template "toasts" .}}
+
+  <script src="/static/js/theme.js"></script>
+  <script src="/static/js/app.js"></script>
+  <script src="/static/js/cart.js"></script>
+  {{block "scripts" .}}{{end}}
+</body>
+</html>
+{{end}}

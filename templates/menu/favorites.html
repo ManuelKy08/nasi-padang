@@ -1,0 +1,10 @@
+{{define "content"}}
+<section class="menu-page">
+  <header class="page-head">
+    <span class="eyebrow">Tersimpan</span>
+    <h1>❤️ Makanan Favorit</h1>
+    <p class="muted">Menu yang kamu simpan, siap dipesan kapan saja.</p>
+  </header>
+  {{template "menuGrid" (dict "Items" .Items)}}
+</section>
+{{end}}

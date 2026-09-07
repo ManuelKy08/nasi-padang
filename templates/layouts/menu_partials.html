@@ -1,0 +1,34 @@
+{{define "menuCard"}}
+<article class="menu-card reveal {{if not .Available}}is-out{{end}}" data-menu-id="{{.ID}}">
+  <a class="mc-media" href="/menu/{{.ID}}">
+    <img src="{{.Image}}" alt="{{.Name}}" loading="lazy" onerror="this.src='/static/images/menu/placeholder.svg'">
+    {{if not .Available}}<span class="mc-out-badge">Habis</span>{{end}}
+  </a>
+  <button class="mc-fav {{if .IsFavorite}}is-fav{{end}}" data-fav="{{.ID}}" aria-label="Favorit" title="Favorit">
+    <svg viewBox="0 0 24 24" width="19" height="19" fill="{{if .IsFavorite}}currentColor{{else}}none{{end}}" stroke="currentColor" stroke-width="2"><path d="M12 21C7 17 3 13.5 3 9.3 3 6.4 5.2 4 8 4c1.6 0 3.1.8 4 2 .9-1.2 2.4-2 4-2 2.8 0 5 2.4 5 5.3C21 13.5 17 17 12 21Z"/></svg>
+  </button>
+  <div class="mc-body">
+    <span class="mc-cat">{{.CategoryName}}</span>
+    <h3 class="mc-name"><a href="/menu/{{.ID}}">{{.Name}}</a></h3>
+    <p class="mc-desc">{{.Description}}</p>
+    <div class="mc-foot">
+      <strong class="mc-price">{{rupiah .Price}}</strong>
+      <button class="btn btn-outline btn-sm" data-add="{{.ID}}" data-name="{{.Name}}" {{if not .Available}}disabled{{end}}>+ TAMBAH</button>
+    </div>
+  </div>
+</article>
+{{end}}
+
+{{define "menuGrid"}}
+<div class="menu-grid">
+  {{range .Items}}
+  {{template "menuCard" .}}
+  {{else}}
+  <div class="empty-state">
+    <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <p>Menu tidak ditemukan.</p>
+    <a href="/menu" class="btn btn-primary btn-sm">Muat Ulang Menu</a>
+  </div>
+  {{end}}
+</div>
+{{end}}

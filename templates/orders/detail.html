@@ -1,0 +1,56 @@
+{{define "content"}}
+<section class="track-page">
+  <header class="page-head">
+    <span class="eyebrow">Lacak Pesanan</span>
+    <h1>{{.Order.OrderNumber}}</h1>
+    <p class="muted">{{datetime .Order.CreatedAt}} · {{orderTypeLabel .Order.OrderType}}{{if .Order.TableNumber}} · Meja {{.Order.TableNumber}}{{end}}</p>
+  </header>
+
+  <div class="track-layout">
+    <div class="panel track-panel reveal">
+      <h3>Perkembangan Pesanan</h3>
+      {{if eq .Order.Status "cancelled"}}
+      <div class="track-cancel"><strong>Pesanan dibatalkan.</strong></div>
+      {{else}}
+      <ol class="timeline">
+        {{range .Steps}}
+        <li class="{{if .Done}}done{{end}}{{if .Active}}active{{end}}">
+          <span class="tl-dot"></span>
+          <span class="tl-label">{{.Label}}</span>
+        </li>
+        {{end}}
+      </ol>
+      {{end}}
+
+      <div class="badge {{statusClass .Order.Status}}">{{statusLabel .Order.Status}}</div>
+      {{if eq .Order.Status "completed"}}
+      <div class="track-msg">Pesanan selesai. Selamat menikmati! 🍛</div>
+      {{end}}
+    </div>
+
+    <div class="track-side">
+      <div class="panel reveal">
+        <h3>Detail</h3>
+        <div class="confirm-grid">
+          <div><span>Metode bayar</span><strong>{{payLabel .Order.PaymentMethod}}</strong></div>
+          <div><span>Subtotal</span><strong>{{rupiah .Order.Subtotal}}</strong></div>
+          <div><span>Ongkir</span><strong>{{rupiah .Order.DeliveryFee}}</strong></div>
+          <div><span>Total</span><strong>{{rupiah .Order.Total}}</strong></div>
+        </div>
+        {{if .Order.Notes}}<p class="notes">📝 {{.Order.Notes}}</p>{{end}}
+      </div>
+
+      <div class="panel reveal">
+        <h3>Item</h3>
+        <ul class="review-items">
+          {{range .Order.Items}}
+          <li><span>{{.MenuName}} <small>× {{.Quantity}}</small></span><strong>{{rupiah (mul .Quantity .Price)}}</strong></li>
+          {{end}}
+        </ul>
+      </div>
+
+      <a href="/orders" class="btn btn-ghost w100">← Kembali ke Riwayat</a>
+    </div>
+  </div>
+</section>
+{{end}}

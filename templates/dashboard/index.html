@@ -1,0 +1,102 @@
+{{define "content"}}
+{{with .User}}
+<section class="hero hero-dashboard">
+  <div class="hero-copy">
+    <span class="eyebrow">{{if $.OpenStatus}}● OPEN · {{$.OpenHour}}:00 — {{$.CloseHour}}:00{{else}}● CLOSED · Buka lagi pukul {{$.OpenHour}}:00{{end}}</span>
+    <h1 class="hero-title">SALAM RANTAU.<br><em>Selamat datang, {{.Name}}.</em></h1>
+    <p class="hero-text">Nikmati cita rasa Minangkabau di mana pun kamu berada. Raso Minang, Dihati.</p>
+    <div class="hero-cta">
+      <a href="/menu" class="btn btn-primary btn-lg">LIHAT MENU</a>
+      <a href="/orders" class="btn btn-ghost btn-lg">Lacak Pesanan</a>
+    </div>
+  </div>
+  <div class="hero-art">
+    <img src="/static/images/dashboard-hero.svg" alt="Hidangan Padang" width="460" height="360">
+    <span class="hero-badge rating">★ 4.9 · 2k+ ulasan</span>
+    <span class="hero-badge dish">Rendang &amp; Ayam Pop</span>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head">
+    <h2>MENU FAVORIT</h2>
+    <a href="/menu" class="link-more">Lihat semua →</a>
+  </div>
+  {{if $.Favourites}}{{template "menuGrid" (dict "Items" $.Favourites)}}{{end}}
+</section>
+
+<section class="section section-split">
+  <div class="panel popular">
+    <div class="section-head">
+      <h2>PALING SERING DIPESAN</h2>
+      <span class="muted">berdasarkan pesanan nyata</span>
+    </div>
+    <ol class="popular-list">
+      {{range $i, $m := $.Popular}}
+      <li>
+        <span class="rank">{{addInt $i 1}}</span>
+        <img src="{{$m.Image}}" alt="{{$m.Name}}" loading="lazy" onerror="this.src='/static/images/menu/placeholder.svg'">
+        <div class="pop-info">
+          <a href="/menu/{{$m.ID}}">{{$m.Name}}</a>
+          <span class="muted">{{$m.TotalQty}}× dipesan</span>
+        </div>
+        <strong>{{rupiah $m.Price}}</strong>
+      </li>
+      {{end}}
+    </ol>
+  </div>
+
+  <div class="panel recent">
+    <div class="section-head">
+      <h2>PESANAN TERBARU</h2>
+      <a href="/orders" class="link-more">Semua →</a>
+    </div>
+    {{if $.RecentOrders}}
+    <ul class="recent-list">
+      {{range $.RecentOrders}}
+      <li>
+        <div class="rec-main">
+          <a href="/orders/{{.ID}}" class="order-no">{{.OrderNumber}}</a>
+          <span class="muted">{{datetime .CreatedAt}}</span>
+        </div>
+        <span class="badge {{statusClass .Status}}">{{statusLabel .Status}}</span>
+        <strong>{{rupiah .Total}}</strong>
+      </li>
+      {{end}}
+    </ul>
+    {{else}}
+    <div class="empty-state compact">
+      <p>Belum ada pesanan. Yuk mulai pesan sekarang!</p>
+      <a href="/menu" class="btn btn-primary btn-sm">Pesan Menu</a>
+    </div>
+    {{end}}
+  </div>
+</section>
+
+<section class="section gallery">
+  <div class="section-head center">
+    <span class="eyebrow">Galeri</span>
+    <h2>A TASTE OF MINANGKABAU</h2>
+    <p class="muted">Rendang, Ayam Pop, Dendeng, Gulai, Sambal, Es Teh — disajikan hangat setiap hari.</p>
+  </div>
+  <div class="masonry">
+    <figure class="tile tile-lg"><img src="/static/images/menu/rendang.svg" alt="Rendang" loading="lazy"><figcaption>Rendang</figcaption></figure>
+    <figure class="tile tile-sm"><img src="/static/images/menu/ayam-pop.svg" alt="Ayam Pop" loading="lazy"><figcaption>Ayam Pop</figcaption></figure>
+    <figure class="tile tile-md"><img src="/static/images/menu/dendeng-balado.svg" alt="Dendeng Balado" loading="lazy"><figcaption>Dendeng</figcaption></figure>
+    <figure class="tile tile-sm"><img src="/static/images/menu/gulai-ayam.svg" alt="Gulai" loading="lazy"><figcaption>Gulai</figcaption></figure>
+    <figure class="tile tile-md"><img src="/static/images/menu/sambal-ijo.svg" alt="Sambal" loading="lazy"><figcaption>Sambal</figcaption></figure>
+    <figure class="tile tile-sm"><img src="/static/images/menu/es-teh.svg" alt="Es Teh" loading="lazy"><figcaption>Es Teh</figcaption></figure>
+  </div>
+</section>
+
+<section class="section cta-strip">
+  <div class="cta-card">
+    <div>
+      <h2>Raso Minang, Dihati.</h2>
+      <p>Pesan sekarang — hangat sampai ke meja kamu.</p>
+    </div>
+    <a href="/menu" class="btn btn-light btn-lg">Pesan Sekarang</a>
+  </div>
+</section>
+{{end}}
+{{end}}

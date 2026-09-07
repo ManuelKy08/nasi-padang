@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400">
+  <defs>
+    <linearGradient id="kg" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#3a241a"/>
+      <stop offset="1" stop-color="#241610"/>
+    </linearGradient>
+  </defs>
+  <rect width="500" height="400" fill="url(#kg)"/>
+  <!-- window / warm light -->
+  <rect x="60" y="50" width="160" height="120" rx="8" fill="#2c1a13"/>
+  <rect x="72" y="62" width="136" height="72" rx="4" fill="#ffd98a" opacity="0.85"/>
+  <g stroke="#1c110b" stroke-width="3"><path d="M140 62 v72 M72 98 h136"/></g>
+  <!-- wall cabinet line -->
+  <rect x="60" y="210" width="380" height="26" fill="#2a1710"/>
+  <!-- counter -->
+  <rect x="0" y="246" width="500" height="30" fill="#4a2c1d"/>
+  <rect x="0" y="276" width="500" height="124" fill="#3a241a"/>
+  <!-- cooking pots -->
+  <g>
+    <ellipse cx="130" cy="258" rx="52" ry="10" fill="#1f120c"/>
+    <path d="M 80 258 q -6 -40 8 -58 q 30 -18 66 0 q 12 16 6 58 z" fill="#5c120e"/>
+    <path d="M 100 222 q 6 -12 18 -16 q 16 -6 24 2" stroke="#f3ead9" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.8"/>
+    <!-- lid -->
+    <ellipse cx="130" cy="202" rx="44" ry="10" fill="#c2953f"/>
+  </g>
+  <g>
+    <ellipse cx="290" cy="260" rx="38" ry="8" fill="#1f120c"/>
+    <path d="M 254 260 q -4 -32 10 -46 q 22 -12 52 0 q 12 12 8 46 z" fill="#8f2a1f"/>
+    <path d="M 272 232 q 8 6 12 4 M 300 228 q 6 8 12 6" stroke="#d8b56a" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+  </g>
+  <!-- hanging utensils -->
+  <g stroke="#c2953f" stroke-width="3" stroke-linecap="round">
+    <path d="M 380 210 v -20 M 372 176 h 16 M 380 176 v 10 q 0 8 6 8 q 6 0 6 -8 v -10 M 380 154 v -16"/>
+    <circle cx="380" cy="150" r="4" fill="#c2953f"/>
+  </g>
+  <!-- lauk display / glass -->
+  <g>
+    <path d="M 330 246 l 0 -70 l 50 0 l 0 70 z" fill="#25120c" opacity="0.55"/>
+    <circle cx="355" cy="212" r="16" fill="#a63a30" opacity="0.85"/>
+  </g>
+  <!-- warm glow -->
+  <ellipse cx="140" cy="300" rx="160" ry="60" fill="#d8b56a" opacity="0.10"/>
+  <text x="250" y="372" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-style="italic" fill="#b99c74" opacity="0.9">Nasi Padang itu, sebenarnya, soal kesabaran.</text>
+</svg>

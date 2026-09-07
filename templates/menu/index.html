@@ -1,0 +1,36 @@
+{{define "content"}}
+<section class="menu-page">
+  <header class="page-head">
+    <span class="eyebrow">Menu Kami</span>
+    <h1>Mau makan apa hari ini?</h1>
+    <p class="muted">Semua lauk disiapkan pagi hari dengan rempah asli Minang.</p>
+  </header>
+
+  <div class="menu-toolbar">
+    <form class="search-inline" action="/menu" method="get" role="search">
+      <input type="hidden" name="category" value="{{.ActiveCat}}">
+      <input type="hidden" name="sort" value="{{.Sort}}">
+      <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="search" name="q" value="{{.Q}}" placeholder="Cari rendang, gulai, ayam pop…" aria-label="Cari menu">
+    </form>
+    <select name="sort" class="select" id="sortSelect" aria-label="Urutkan">
+      <option value="" {{if eq .Sort ""}}selected{{end}}>Urutkan</option>
+      <option value="name" {{if eq .Sort "name"}}selected{{end}}>Nama A–Z</option>
+      <option value="price_asc" {{if eq .Sort "price_asc"}}selected{{end}}>Harga terendah</option>
+      <option value="price_desc" {{if eq .Sort "price_desc"}}selected{{end}}>Harga tertinggi</option>
+      <option value="popular" {{if eq .Sort "popular"}}selected{{end}}>Terpopuler</option>
+    </select>
+  </div>
+
+  <div class="cat-scroll" role="tablist" aria-label="Kategori">
+    <a href="/menu" class="chip {{if or (eq .ActiveCat "") (eq .ActiveCat "semua")}}active{{end}}">SEMUA</a>
+    {{range .Categories}}
+    <a href="/menu?category={{.Slug}}{{if $.Q}}&q={{$.Q}}{{end}}" class="chip {{if eq $.ActiveCat .Slug}}active{{end}}">{{.Name}}</a>
+    {{end}}
+  </div>
+
+  {{if .Q}}<p class="filter-note">Menampilkan hasil untuk “{{.Q}}”. <a href="/menu">Reset</a></p>{{end}}
+
+  {{template "menuGrid" (dict "Items" .Items)}}
+</section>
+{{end}}

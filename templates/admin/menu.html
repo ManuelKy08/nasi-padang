@@ -1,0 +1,103 @@
+{{define "content"}}
+<section class="admin-page">
+  <div class="admin-head">
+    <div>
+      <span class="eyebrow">Admin</span>
+      <h1>Manajemen Menu</h1>
+    </div>
+    <nav class="admin-tabs">
+      <a href="/admin">Ringkasan</a>
+      <a href="/admin/menu" class="active">Menu</a>
+      <a href="/admin/orders">Pesanan</a>
+      <a href="/admin/users">Pengguna</a>
+      <a href="/admin/reports">Laporan</a>
+    </nav>
+  </div>
+
+  <div class="admin-layout">
+    <div class="panel">
+      <div class="toolbar-inline">
+        <h3>{{if .Editing}}Edit Menu #{{.Editing.ID}}{{else}}Tambah Menu{{end}}</h3>
+      </div>
+      <form method="POST" action="{{if .Editing}}/admin/menu/edit{{else}}/admin/menu/create{{end}}" enctype="multipart/form-data" class="form-grid">
+        <input type="hidden" name="csrf_token" value="{{.CSRF}}">
+        {{if .Editing}}<input type="hidden" name="id" value="{{.Editing.ID}}">{{end}}
+
+        <div class="field">
+          <label for="cname">Nama menu</label>
+          <input id="cname" type="text" name="name" value="{{if .Editing}}{{.Editing.Name}}{{end}}" required minlength="2">
+        </div>
+        <div class="field">
+          <label for="ccat">Kategori</label>
+          <select id="ccat" name="category_id">
+            {{range .Categories}}
+            <option value="{{.ID}}" {{if and $.Editing (eq $.Editing.CategoryID .ID)}}selected{{end}}>{{.Name}}</option>
+            {{end}}
+          </select>
+        </div>
+        <div class="field full">
+          <label for="cdesc">Deskripsi</label>
+          <textarea id="cdesc" name="description" rows="2">{{if .Editing}}{{.Editing.Description}}{{end}}</textarea>
+        </div>
+        <div class="field">
+          <label for="cprice">Harga (Rp)</label>
+          <input id="cprice" type="number" name="price" value="{{if .Editing}}{{.Editing.Price}}{{end}}" min="100" required>
+        </div>
+        <div class="field">
+          <label for="cimg">Foto</label>
+          <input id="cimg" type="file" name="image" accept="image/*">
+          {{if .Editing}}<small class="muted">Biarkan kosong jika tidak ganti foto.</small>{{end}}
+        </div>
+        <div class="field">
+          <label class="check">
+            <input type="checkbox" name="available" value="1" {{if not .Editing}}checked{{end}}{{if and .Editing .Editing.Available}}checked{{end}}>
+            <span>Tersedia</span>
+          </label>
+        </div>
+        <div class="field full btn-row">
+          <button type="submit" class="btn btn-primary">{{if .Editing}}SIMPAN PERUBAHAN{{else}}TAMBAH MENU{{end}}</button>
+          {{if .Editing}}<a href="/admin/menu" class="btn btn-ghost">Batal</a>{{end}}
+        </div>
+      </form>
+    </div>
+
+    <div class="panel menu-admin-table">
+      <h3>Daftar Menu</h3>
+      <div class="table-scroll">
+        <table class="table">
+          <thead><tr><th>Menu</th><th>Kategori</th><th>Harga</th><th>Status</th><th class="t-actions">Aksi</th></tr></thead>
+          <tbody>
+            {{range .Items}}
+            <tr>
+              <td>
+                <div class="td-item">
+                  <img src="{{.Image}}" alt="{{.Name}}" onerror="this.src='/static/images/menu/placeholder.svg'">
+                  <div><strong>{{.Name}}</strong><small class="muted">{{.Slug}}</small></div>
+                </div>
+              </td>
+              <td>{{.CategoryName}}</td>
+              <td>{{rupiah .Price}}</td>
+              <td>
+                <button class="switch {{if .Available}}on{{end}}" data-toggle="{{.ID}}" role="switch" aria-checked="{{.Available}}">
+                  <span></span>
+                </button>
+              </td>
+              <td class="t-actions">
+                <div class="row-actions">
+                  <a class="icon-btn sm" href="/admin/menu?edit={{.ID}}" title="Edit">✎</a>
+                  <form method="POST" action="/admin/menu/delete" data-confirm="Hapus {{.Name}}?">
+                    <input type="hidden" name="csrf_token" value="{{$.CSRF}}">
+                    <input type="hidden" name="id" value="{{.ID}}">
+                    <button class="icon-btn sm danger" title="Hapus">🗑</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            {{end}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+{{end}}

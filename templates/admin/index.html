@@ -1,0 +1,45 @@
+{{define "content"}}
+<section class="admin-page">
+  <div class="admin-head">
+    <div>
+      <span class="eyebrow">Admin</span>
+      <h1>Dashboard Restoran</h1>
+    </div>
+    <nav class="admin-tabs">
+      <a href="/admin" class="active">Ringkasan</a>
+      <a href="/admin/menu">Menu</a>
+      <a href="/admin/orders">Pesanan</a>
+      <a href="/admin/users">Pengguna</a>
+      <a href="/admin/reports">Laporan</a>
+    </nav>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-card reveal"><span>Total Menu</span><strong>{{.MenuCount}}</strong></div>
+    <div class="stat-card reveal"><span>Total Customer</span><strong>{{.CustomerCount}}</strong></div>
+    <div class="stat-card reveal"><span>Pesanan Hari Ini</span><strong>{{.OrdersToday}}</strong></div>
+    <div class="stat-card reveal"><span>Pesanan Aktif</span><strong>{{.Active}}</strong></div>
+    <div class="stat-card stat-accent reveal"><span>Pendapatan Hari Ini</span><strong>{{rupiah .RevenueToday}}</strong></div>
+  </div>
+
+  <div class="admin-grid">
+    <div class="panel reveal">
+      <h3>Pendapatan 7 Hari Terakhir</h3>
+      <div class="bar-chart" id="revenueChart"></div>
+    </div>
+    <div class="panel reveal">
+      <h3>Menu Terlaris</h3>
+      <ol class="popular-list vip">
+        {{range $i, $m := .TopMenu}}
+        <li>
+          <span class="rank">{{addInt $i 1}}</span>
+          <img src="{{$m.Image}}" alt="{{$m.Name}}" onerror="this.src='/static/images/menu/placeholder.svg'">
+          <div class="pop-info"><strong>{{$m.Name}}</strong><span class="muted">{{$m.TotalQty}}× terjual</span></div>
+        </li>
+        {{end}}
+      </ol>
+    </div>
+  </div>
+</section>
+<script>if (window.Rantau) Rantau.barChart('revenueChart', {{json .Chart}});</script>
+{{end}}

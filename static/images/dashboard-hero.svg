@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 360">
+  <defs>
+    <linearGradient id="hg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff8ec"/>
+      <stop offset="1" stop-color="#f0e2c9"/>
+    </linearGradient>
+    <radialGradient id="plate" cx="0.5" cy="0.42" r="0.6">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f1e6d2"/>
+    </radialGradient>
+  </defs>
+  <rect width="460" height="360" fill="url(#hg)"/>
+  <g stroke="#c2953f" stroke-width="2.4" stroke-linecap="round" fill="none" opacity="0.4">
+    <path d="M22 258 L60 40 L98 258 L136 40 L174 258 L212 40 L250 258 L288 40 L326 258 L364 40 L402 258 L438 120"/>
+    <path d="M22 272 C48 260 76 260 102 274 C122 262 152 262 178 276 C198 264 228 264 254 278 C274 266 304 266 330 280 C352 270 382 270 404 284 C418 278 430 278 438 284"/>
+  </g>
+  <!-- plate -->
+  <circle cx="230" cy="205" r="128" fill="url(#plate)" stroke="#e6d7ba" stroke-width="3"/>
+  <circle cx="230" cy="205" r="112" fill="#fff7e8"/>
+  <circle cx="230" cy="205" r="112" stroke="#7a1b16" stroke-width="2" stroke-dasharray="2 6" opacity="0.4"/>
+  <!-- rendang pile -->
+  <g>
+    <ellipse cx="230" cy="216" rx="82" ry="44" fill="#5c120e"/>
+    <ellipse cx="230" cy="208" rx="70" ry="36" fill="#7a1b16"/>
+    <ellipse cx="230" cy="206" rx="56" ry="30" fill="#8f2a1f"/>
+    <path d="M196 196 q10 -14 20 -4 q8 -16 26 -8 q10 -12 24 -2 q8 -10 18 0 q4 -8 12 -2 q12 6 6 18 q16 4 6 16 q-4 8 -14 6 q-12 8 -22 -2 q-14 10 -26 -2 q-12 6 -20 -4 q-16 4 -26 -10 q-8 -2 -4 10 z" fill="#a63a30"/>
+    <circle cx="200" cy="230" r="5" fill="#d8b56a"/>
+    <circle cx="258" cy="232" r="5" fill="#d8b56a"/>
+    <circle cx="230" cy="176" r="4" fill="#d8b56a"/>
+    <path d="M212 220 l6 10 l-12 2 M252 208 l-4 11 l12 1" stroke="#d8b56a" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </g>
+  <!-- steam -->
+  <g stroke="#c2953f" stroke-width="2.4" fill="none" opacity="0.7" stroke-linecap="round">
+    <path d="M212 148 q-4 -10 2 -18 t-2 -18"/>
+    <path d="M230 142 q-4 -10 2 -18 t-2 -16"/>
+    <path d="M248 148 q-4 -10 2 -18 t-2 -18"/>
+  </g>
+  <!-- garnish -->
+  <path d="M160 250 l-26 6 M300 250 l26 6" stroke="#4a2c1d" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.6"/>
+  <text x="230" y="318" text-anchor="middle" font-family="Georgia, serif" font-size="26" font-style="italic" fill="#7a1b16">Rendang &amp; Hidangan Minang</text>
+</svg>

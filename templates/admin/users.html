@@ -1,0 +1,56 @@
+{{define "content"}}
+<section class="admin-page">
+  <div class="admin-head">
+    <div>
+      <span class="eyebrow">Admin</span>
+      <h1>Manajemen Pengguna</h1>
+    </div>
+    <nav class="admin-tabs">
+      <a href="/admin">Ringkasan</a>
+      <a href="/admin/menu">Menu</a>
+      <a href="/admin/orders">Pesanan</a>
+      <a href="/admin/users" class="active">Pengguna</a>
+      <a href="/admin/reports">Laporan</a>
+    </nav>
+  </div>
+
+  <div class="panel">
+    <div class="table-scroll">
+      <table class="table users-table">
+        <thead><tr><th>Pengguna</th><th>Kontak</th><th>Pesanan</th><th>Total Belanja</th><th>Role</th><th class="t-actions">Aksi</th></tr></thead>
+        <tbody>
+          {{range .Users}}
+          <tr>
+            <td>
+              <div class="td-item">
+                <span class="avatar avatar-sm">{{initial .Name}}</span>
+                <div><strong>{{.Name}}</strong><small class="muted">{{.Email}}</small></div>
+              </div>
+            </td>
+            <td class="muted">{{.Phone}}</td>
+            <td>{{.OrderCount}}</td>
+            <td>{{rupiah .TotalSpent}}</td>
+            <td>
+              <select class="role-select" data-user="{{.ID}}" data-name="{{.Name}}">
+                <option value="customer" {{if eq .Role "customer"}}selected{{end}}>Customer</option>
+                <option value="admin" {{if eq .Role "admin"}}selected{{end}}>Admin</option>
+              </select>
+            </td>
+            <td class="t-actions">
+              {{if ne .Role "admin"}}
+              <form method="POST" action="/admin/users/{{.ID}}/delete" data-confirm="Hapus {{.Name}}?">
+                <input type="hidden" name="csrf_token" value="{{$.CSRF}}">
+                <button class="icon-btn sm danger" title="Hapus">🗑</button>
+              </form>
+              {{else}}
+              <span class="muted">—</span>
+              {{end}}
+            </td>
+          </tr>
+          {{end}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+{{end}}

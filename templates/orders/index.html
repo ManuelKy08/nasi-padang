@@ -1,0 +1,37 @@
+{{define "content"}}
+<section class="orders-page">
+  <header class="page-head">
+    <span class="eyebrow">Riwayat</span>
+    <h1>Pesanan Saya</h1>
+    <p class="muted">Semua pesananmu dalam satu tempat.</p>
+  </header>
+
+  {{if .Orders}}
+  <ul class="order-list">
+    {{range .Orders}}
+    <li class="order-card reveal">
+      <div class="oc-main">
+        <a href="/orders/{{.ID}}" class="oc-number">{{.OrderNumber}}</a>
+        <span class="muted">{{datetime .CreatedAt}} · {{orderTypeLabel .OrderType}}</span>
+        <div class="oc-items">
+          {{range $i, $it := .Items}}{{if lt $i 3}}{{if $i}}, {{end}}{{.MenuName}} × {{.Quantity}}{{end}}{{end}}
+          {{if gt (len .Items) 3}}<span class="muted"> +{{sub (len .Items) 3}} lainnya</span>{{end}}
+        </div>
+      </div>
+      <div class="oc-side">
+        <span class="badge {{statusClass .Status}}">{{statusLabel .Status}}</span>
+        <strong>{{rupiah .Total}}</strong>
+        <a href="/orders/{{.ID}}" class="btn btn-outline btn-sm">DETAIL</a>
+      </div>
+    </li>
+    {{end}}
+  </ul>
+  {{else}}
+  <div class="empty-state">
+    <svg viewBox="0 0 24 24" width="46" height="46" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 3h2l2.4 12.2a2 2 0 0 0 2 1.8h7.7a2 2 0 0 0 2-1.6L20.6 8H6"/><circle cx="9.5" cy="21" r="1.3"/><circle cx="16.5" cy="21" r="1.3"/></svg>
+    <p>Belum ada pesanan sama sekali.</p>
+    <a href="/menu" class="btn btn-primary">Mulai Pesan</a>
+  </div>
+  {{end}}
+</section>
+{{end}}

@@ -1,0 +1,55 @@
+{{define "content"}}
+<section class="cart-page">
+  <header class="page-head">
+    <span class="eyebrow">Keranjang</span>
+    <h1>Pesanan Saya</h1>
+    <p class="muted">Periksa kembali pesananmu sebelum lanjut ke checkout.</p>
+  </header>
+
+  <div class="cart-layout">
+    <div class="cart-list reveal">
+      {{if .Items}}
+      <ul class="cart-items">
+        {{range .Items}}
+        <li class="cart-item" data-item-id="{{.ID}}">
+          <a class="ci-img" href="/menu/{{.Menu.ID}}">
+            <img src="{{.Menu.Image}}" alt="{{.Menu.Name}}" loading="lazy" onerror="this.src='/static/images/menu/placeholder.svg'">
+          </a>
+          <div class="ci-info">
+            <a href="/menu/{{.Menu.ID}}" class="ci-name">{{.Menu.Name}}</a>
+            <span class="ci-cat">{{.Menu.CategoryName}}</span>
+            <strong class="ci-price">{{rupiah .Menu.Price}}</strong>
+          </div>
+          <div class="ci-ctrl">
+            <div class="qty-stepper">
+              <button type="button" class="qty-btn" data-qty-dec aria-label="Kurangi">−</button>
+              <input type="number" value="{{.Quantity}}" min="1" max="50" data-qty data-item="{{.ID}}" aria-label="Jumlah">
+              <button type="button" class="qty-btn" data-qty-inc aria-label="Tambah">+</button>
+            </div>
+            <button type="button" class="link-danger" data-cart-remove="{{.ID}}">Hapus</button>
+          </div>
+        </li>
+        {{end}}
+      </ul>
+      <div class="cart-foot-actions">
+        <a href="/menu" class="btn btn-ghost">+ Tambah menu lagi</a>
+      </div>
+      {{else}}
+      <div class="empty-state">
+        <svg viewBox="0 0 24 24" width="46" height="46" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 3h2l2.4 12.2a2 2 0 0 0 2 1.8h7.7a2 2 0 0 0 2-1.6L20.6 8H6"/><circle cx="9.5" cy="21" r="1.3"/><circle cx="16.5" cy="21" r="1.3"/></svg>
+        <p>Pesanan masih kosong.</p>
+        <a href="/menu" class="btn btn-primary">Lihat Menu</a>
+      </div>
+      {{end}}
+    </div>
+
+    <aside class="cart-summary reveal">
+      <h3>Ringkasan</h3>
+      <div class="sum-line"><span>Subtotal</span><strong id="sumSubtotal">{{rupiah .Subtotal}}</strong></div>
+      <div class="sum-line"><span>Pengantaran</span><strong>Dihitung saat checkout</strong></div>
+      <div class="sum-total"><span>Estimasi total</span><strong id="sumTotal">{{rupiah .Subtotal}}</strong></div>
+      <a href="/checkout" class="btn btn-primary w100 btn-lg" {{if not .Items}}disabled{{end}}>LANJUT KE CHECKOUT</a>
+    </aside>
+  </div>
+</section>
+{{end}}

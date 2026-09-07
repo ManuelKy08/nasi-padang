@@ -1,0 +1,13 @@
+{{define "toasts"}}
+<div class="toast-wrap" id="toastWrap" aria-live="polite"></div>
+{{if .FlashOk}}<template id="flashOk">{{.FlashOk}}</template>{{end}}
+{{if .FlashErr}}<template id="flashErr">{{.FlashErr}}</template>{{end}}
+<script>
+  (function () {
+    var ok = document.getElementById('flashOk');
+    var err = document.getElementById('flashErr');
+    if (ok) setTimeout(function () { Rantau.notify(ok.textContent, 'success'); }, 120);
+    if (err) setTimeout(function () { Rantau.notify(err.textContent, 'error'); }, 120);
+  })();
+</script>
+{{end}}

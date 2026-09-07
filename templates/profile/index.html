@@ -1,0 +1,58 @@
+{{define "content"}}
+<section class="profile-page">
+  <header class="page-head">
+    <span class="eyebrow">Akun</span>
+    <h1>Profil Saya</h1>
+  </header>
+
+  <div class="profile-layout">
+    <aside class="profile-card reveal">
+      <span class="avatar avatar-lg">{{initial .User.Name}}</span>
+      <h2>{{.User.Name}}</h2>
+      <p class="muted">{{.User.Email}}</p>
+      <div class="profile-stats">
+        <div><strong>{{.OrderCount}}</strong><span>Pesanan</span></div>
+        <div><strong>{{moneyNoRp .TotalSpent}}</strong><span>Total belanja</span></div>
+      </div>
+      <span class="chip chip-role">{{if eq .User.Role "admin"}}Admin{{else}}Pelanggan{{end}}</span>
+    </aside>
+
+    <div class="panel reveal">
+      <h3>Edit Profil</h3>
+      <form method="POST" action="/profile" class="form-grid" novalidate>
+        <input type="hidden" name="csrf_token" value="{{.CSRF}}">
+        <div class="field">
+          <label for="pname">Nama lengkap</label>
+          <input type="text" id="pname" name="name" value="{{.User.Name}}" required minlength="3">
+        </div>
+        <div class="field">
+          <label for="pemail">Email</label>
+          <input type="email" id="pemail" value="{{.User.Email}}" disabled>
+          <small class="muted">Email tidak dapat diubah.</small>
+        </div>
+        <div class="field">
+          <label for="pphone">Nomor HP</label>
+          <input type="tel" id="pphone" name="phone" value="{{.User.Phone}}" required>
+        </div>
+        <div class="field full">
+          <label for="paddr">Alamat</label>
+          <textarea id="paddr" name="address" rows="2" placeholder="Alamat kamu">{{.User.Address}}</textarea>
+        </div>
+
+        <div class="field">
+          <label for="ppass">Password lama</label>
+          <input type="password" id="ppass" name="password" autocomplete="current-password" placeholder="Kosongkan jika tidak ganti">
+        </div>
+        <div class="field">
+          <label for="pnewpass">Password baru</label>
+          <input type="password" id="pnewpass" name="new_password" autocomplete="new-password" placeholder="Minimal 8 karakter">
+        </div>
+
+        <div class="field full">
+          <button type="submit" class="btn btn-primary btn-lg">SIMPAN PERUBAHAN</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+{{end}}

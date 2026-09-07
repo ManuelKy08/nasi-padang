@@ -1,0 +1,16 @@
+/* Dashboard — hero & home layout refinements. */
+
+.hero-dashboard { position: relative; overflow: hidden; }
+.hero-dashboard::before {
+  content: ''; position: absolute; inset: -40% -20% auto auto; width: 480px; height: 480px;
+  background: radial-gradient(circle, rgba(201, 149, 63, .12), transparent 65%);
+  pointer-events: none;
+}
+
+.hero-art { animation: floaty 7s ease-in-out infinite; }
+@keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-art { animation: none; }
+  .reveal { transition: none; transform: none; opacity: 1; }
+}

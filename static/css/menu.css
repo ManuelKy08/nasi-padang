@@ -1,0 +1,17 @@
+/* Menu pages — separate stylesheet keeping the theme sheet focused. */
+
+.menu-grid > .menu-card.in { animation: fadeUp .5s ease both; }
+
+.mc-name { margin: 0; }
+
+.cat-scroll .chip { flex-shrink: 0; }
+
+/* Highlight row hover */
+.menu-card { hover: none; }
+.menu-card a { color: inherit; }
+
+.qty-picker input::-webkit-outer-spin-button,
+.qty-picker input::-webkit-inner-spin-button,
+.qty-stepper input::-webkit-outer-spin-button,
+.qty-stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.qty-picker input, .qty-stepper input { -moz-appearance: textfield; appearance: textfield; }

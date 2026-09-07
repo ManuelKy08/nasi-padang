@@ -1,0 +1,47 @@
+{{define "content"}}
+<section class="receipt-page">
+  <div class="receipt-card reveal" id="receipt">
+    <div class="receipt-head">
+      <div class="receipt-brand">
+        <svg viewBox="0 0 32 32" width="30" height="30" fill="none"><path d="M4 26 L10 6 L16 26 L22 6 L28 26" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 30 C8 26 12 26 16 30 C20 26 24 26 28 30" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+        <div><strong>RANTAU</strong><small>RUMAH MAKAN PADANG</small></div>
+      </div>
+      <span class="badge {{statusClass .Order.Status}}">{{statusLabel .Order.Status}}</span>
+    </div>
+
+    <div class="receipt-rule"></div>
+
+    <div class="receipt-line"><span>ORDER</span><strong>{{.Order.OrderNumber}}</strong></div>
+    <div class="receipt-line"><span>TANGGAL</span><strong>{{dateShort .Order.CreatedAt}}</strong></div>
+    <div class="receipt-line"><span>JENIS</span><strong>{{orderTypeLabel .Order.OrderType}}{{if .Order.TableNumber}} · Meja {{.Order.TableNumber}}{{end}}</strong></div>
+    <div class="receipt-line"><span>BAYAR</span><strong>{{payLabel .Order.PaymentMethod}}</strong></div>
+    {{if .Order.Address}}<div class="receipt-line"><span>ALAMAT</span><strong>{{.Order.Address}}</strong></div>{{end}}
+
+    <div class="receipt-rule"></div>
+
+    <ul class="receipt-items">
+      {{range .Order.Items}}
+      <li>
+        <span>{{.MenuName}} <small>× {{.Quantity}}</small></span>
+        <strong>{{moneyNoRp (mul .Quantity .Price)}}</strong>
+      </li>
+      {{end}}
+    </ul>
+
+    <div class="receipt-rule"></div>
+
+    <div class="receipt-line"><span>Subtotal</span><strong>{{moneyNoRp .Order.Subtotal}}</strong></div>
+    <div class="receipt-line"><span>Tanggung</span><strong>{{moneyNoRp .Order.DeliveryFee}}</strong></div>
+    <div class="receipt-total"><span>TOTAL</span><strong>Rp {{moneyNoRp .Order.Total}}</strong></div>
+
+    <div class="receipt-rule"></div>
+    <p class="receipt-thanks">Terima kasih.<br>Selamat menikmati. 🍛</p>
+  </div>
+
+  <div class="receipt-actions">
+    <button class="btn btn-primary btn-lg" id="printReceipt">🖨 PRINT RECEIPT</button>
+    <a href="/orders/{{.Order.ID}}" class="btn btn-ghost">Lacak Pesanan</a>
+    <a href="/menu" class="btn btn-ghost">Pesan Lagi</a>
+  </div>
+</section>
+{{end}}

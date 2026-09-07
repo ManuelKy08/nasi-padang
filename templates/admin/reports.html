@@ -1,0 +1,64 @@
+{{define "content"}}
+<section class="admin-page">
+  <div class="admin-head">
+    <div>
+      <span class="eyebrow">Admin</span>
+      <h1>Laporan Penjualan</h1>
+    </div>
+    <nav class="admin-tabs">
+      <a href="/admin">Ringkasan</a>
+      <a href="/admin/menu">Menu</a>
+      <a href="/admin/orders">Pesanan</a>
+      <a href="/admin/users">Pengguna</a>
+      <a href="/admin/reports" class="active">Laporan</a>
+    </nav>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-card reveal"><span>Penjualan Hari Ini</span><strong>{{rupiah .Today}}</strong></div>
+    <div class="stat-card reveal"><span>Penjualan Minggu Ini</span><strong>{{rupiah .Week}}</strong></div>
+    <div class="stat-card reveal"><span>Penjualan Bulan Ini</span><strong>{{rupiah .Month}}</strong></div>
+    <div class="stat-card stat-accent reveal"><span>Avg. Order Value</span><strong>{{rupiah .Avg}}</strong></div>
+    <div class="stat-card reveal"><span>Total Pesanan</span><strong>{{.TotalOrders}}</strong></div>
+  </div>
+
+  <div class="admin-grid">
+    <div class="panel reveal">
+      <h3>Grafik Mingguan</h3>
+      <div class="bar-chart" id="reportChart"></div>
+    </div>
+    <div class="panel reveal">
+      <h3>Menu Terlaris</h3>
+      <ol class="popular-list vip">
+        {{range $i, $m := .TopMenu}}
+        <li>
+          <span class="rank">{{addInt $i 1}}</span>
+          <img src="{{$m.Image}}" alt="{{$m.Name}}" onerror="this.src='/static/images/menu/placeholder.svg'">
+          <div class="pop-info"><strong>{{$m.Name}}</strong><span class="muted">{{$m.TotalQty}}× terjual</span></div>
+        </li>
+        {{end}}
+      </ol>
+    </div>
+    <div class="panel reveal">
+      <h3>Kategori Terlaris</h3>
+      <ul class="sold-list">
+        {{range .TopCat}}<li><span>{{.Category}}</span><strong>{{.Quantity}}×</strong></li>{{end}}
+      </ul>
+    </div>
+    <div class="panel reveal">
+      <h3>Status Pesanan</h3>
+      <ul class="sold-list">
+        <li><span>Dibuat</span><strong>{{index .Dist "pending"}}</strong></li>
+        <li><span>Diproses</span><strong>{{index .Dist "processing"}}</strong></li>
+        <li><span>Dimasak</span><strong>{{index .Dist "cooking"}}</strong></li>
+        <li><span>Siap</span><strong>{{index .Dist "ready"}}</strong></li>
+        <li><span>Diantar</span><strong>{{index .Dist "delivering"}}</strong></li>
+        <li><span>Disajikan</span><strong>{{index .Dist "served"}}</strong></li>
+        <li><span>Selesai</span><strong>{{index .Dist "completed"}}</strong></li>
+        <li><span>Dibatalkan</span><strong>{{index .Dist "cancelled"}}</strong></li>
+      </ul>
+    </div>
+  </div>
+</section>
+<script>if (window.Rantau) Rantau.barChart('reportChart', {{json .Chart}});</script>
+{{end}}

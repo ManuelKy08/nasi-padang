@@ -1,0 +1,149 @@
+{{define "content"}}
+<section class="checkout-page">
+  <header class="page-head">
+    <span class="eyebrow">Checkout</span>
+    <h1>Selesaikan Pesanan</h1>
+    <p class="muted">Empat langkah cepat, dan pesananmu berjalan ke dapur.</p>
+  </header>
+
+  <ol class="steps" aria-label="Langkah checkout">
+    <li class="active" data-step="01">PESANAN</li>
+    <li data-step="02">INFORMASI</li>
+    <li data-step="03">PEMBAYARAN</li>
+    <li data-step="04">KONFIRMASI</li>
+  </ol>
+
+  <form method="POST" action="/checkout" id="checkoutForm" novalidate>
+    <input type="hidden" name="csrf_token" value="{{.CSRF}}">
+    <input type="hidden" name="order_type" id="orderType" value="dine_in">
+    <input type="hidden" name="payment_method" id="paymentMethod" value="cash">
+
+    <!-- 01 PESANAN review -->
+    <div class="checkout-step active" data-pane="01">
+      <div class="panel">
+        <h3>Ringkasan Pesanan</h3>
+        <ul class="review-items">
+          {{range .Items}}
+          <li>
+            <span>{{.Menu.Name}} <small>× {{.Quantity}}</small></span>
+            <strong>{{rupiah (mul .Quantity .Menu.Price)}}</strong>
+          </li>
+          {{end}}
+        </ul>
+        <div class="sum-line"><span>Subtotal</span><strong>{{rupiah .Subtotal}}</strong></div>
+        <div class="sum-line"><span>Biaya pengantaran</span><strong id="reviewFeeDesc">— (diisi saat pilih metode)</strong></div>
+        <div class="sum-total"><span>Perkiraan total</span><strong id="reviewTotal">{{rupiah .Subtotal}}</strong></div>
+      </div>
+      <button type="button" class="btn btn-primary btn-lg" data-next="02">LANJUT →</button>
+    </div>
+
+    <!-- 02 INFORMASI + jenis pesanan -->
+    <div class="checkout-step" data-pane="02">
+      <div class="panel">
+        <h3>Jenis Pesanan</h3>
+        <div class="type-grid">
+          <label class="type-card">
+            <input type="radio" name="order_type_radio" value="dine_in" checked data-ordertype="dine_in">
+            <strong>Makan di Tempat</strong>
+            <span>Nomor meja diminta</span>
+          </label>
+          <label class="type-card">
+            <input type="radio" name="order_type_radio" value="take_away" data-ordertype="take_away">
+            <strong>Take Away</strong>
+            <span>Ambil sendiri</span>
+          </label>
+          <label class="type-card">
+            <input type="radio" name="order_type_radio" value="delivery" data-ordertype="delivery">
+            <strong>Delivery</strong>
+            <span>Diantar ke alamat</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Informasi</h3>
+        <div class="field-row">
+          <div class="field" data-show="dine_in">
+            <label for="table">Nomor meja</label>
+            <input type="text" id="table" name="table_number" placeholder="cth: 12">
+          </div>
+          <div class="field" data-show="take_away,delivery">
+            <label for="pickupName">Nama pemesan</label>
+            <input type="text" id="pickupName" name="pickup_name" placeholder="Nama kamu">
+          </div>
+          <div class="field" data-show="take_away,delivery">
+            <label for="pickupPhone">Nomor HP</label>
+            <input type="tel" id="pickupPhone" name="pickup_phone" placeholder="0812xxxxx">
+          </div>
+          <div class="field" data-show="delivery">
+            <label for="address">Alamat lengkap</label>
+            <textarea id="address" name="address" rows="2" placeholder="Jalan, nomor rumah, kecamatan…"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Catatan Untuk Dapur</h3>
+        <div class="field">
+          <label for="notes">Catatan</label>
+          <input type="text" id="notes" name="notes" maxlength="200" placeholder="cth: jangan terlalu pedas">
+        </div>
+      </div>
+
+      <div class="stepper-cta">
+        <button type="button" class="btn btn-ghost" data-prev="01">← Kembali</button>
+        <button type="button" class="btn btn-primary" data-next="03">LANJUT →</button>
+      </div>
+    </div>
+
+    <!-- 03 PEMBAYARAN -->
+    <div class="checkout-step" data-pane="03">
+      <div class="panel">
+        <h3>Metode Pembayaran</h3>
+        <p class="muted">Pembayaran disimulasikan — tidak ada transaksi sungguhan.</p>
+        <div class="pay-grid">
+          <label class="pay-card">
+            <input type="radio" name="pay_radio" value="cash" checked data-pay="cash">
+            <strong>💵 Cash</strong>
+            <span>Bayar tunai di kasir / kurir</span>
+          </label>
+          <label class="pay-card">
+            <input type="radio" name="pay_radio" value="bank_transfer" data-pay="bank_transfer">
+            <strong>🏦 Bank Transfer</strong>
+            <span>Transfer ke rekening RANTAU</span>
+          </label>
+          <label class="pay-card">
+            <input type="radio" name="pay_radio" value="ewallet" data-pay="ewallet">
+            <strong>📱 E-Wallet</strong>
+            <span>GoPay, OVO, DANA, ShopeePay</span>
+          </label>
+        </div>
+      </div>
+      <div class="stepper-cta">
+        <button type="button" class="btn btn-ghost" data-prev="02">← Kembali</button>
+        <button type="button" class="btn btn-primary" data-next="04">LANJUT →</button>
+      </div>
+    </div>
+
+    <!-- 04 KONFIRMASI -->
+    <div class="checkout-step" data-pane="04">
+      <div class="panel">
+        <h3>Konfirmasi Pesanan</h3>
+        <div class="confirm-grid">
+          <div><span>Jenis</span><strong id="confirmType">Makan di Tempat</strong></div>
+          <div><span>Meja / detail</span><strong id="confirmInfo">—</strong></div>
+          <div><span>Pembayaran</span><strong id="confirmPay">Cash</strong></div>
+          <div><span>Catatan</span><strong id="confirmNote">—</strong></div>
+        </div>
+        <div class="sum-line"><span>Subtotal</span><strong id="confirmSubtotal">{{rupiah .Subtotal}}</strong></div>
+        <div class="sum-line"><span>Biaya pengantaran</span><strong id="confirmFee">Rp 0</strong></div>
+        <div class="sum-total"><span>Total</span><strong id="confirmTotal">{{rupiah .Subtotal}}</strong></div>
+      </div>
+      <div class="stepper-cta">
+        <button type="button" class="btn btn-ghost" data-prev="03">← Kembali</button>
+        <button type="submit" class="btn btn-primary btn-lg" id="placeOrder">BUAT PESANAN ✓</button>
+      </div>
+    </div>
+  </form>
+</section>
+{{end}}

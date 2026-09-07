@@ -1,0 +1,60 @@
+{{define "content"}}
+{{with .Item}}
+<section class="detail-page">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/menu">Menu</a> <span>/</span> <a href="/menu?category={{$.CatSlug}}">{{.CategoryName}}</a> <span>/</span> <em>{{.Name}}</em>
+  </nav>
+
+  <div class="detail-grid">
+    <div class="detail-media reveal">
+      <img src="{{.Image}}" alt="{{.Name}}" onerror="this.src='/static/images/menu/placeholder.svg'">
+      {{if not .Available}}<span class="mc-out-badge">Habis</span>{{end}}
+      <button class="mc-fav big {{if .IsFavorite}}is-fav{{end}}" data-fav="{{.ID}}" aria-label="Favorit">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="{{if .IsFavorite}}currentColor{{else}}none{{end}}" stroke="currentColor" stroke-width="2"><path d="M12 21C7 17 3 13.5 3 9.3 3 6.4 5.2 4 8 4c1.6 0 3.1.8 4 2 .9-1.2 2.4-2 4-2 2.8 0 5 2.4 5 5.3C21 13.5 17 17 12 21Z"/></svg>
+      </button>
+    </div>
+
+    <div class="detail-info reveal">
+      <span class="mc-cat">{{.CategoryName}}</span>
+      <h1>{{.Name}}</h1>
+      <p class="detail-desc">{{.Description}}</p>
+
+      <div class="detail-price">
+        <strong>{{rupiah .Price}}</strong>
+        <span class="chip chip-status {{if .Available}}ok{{else}}no{{end}}">{{if .Available}}Tersedia{{else}}Habis{{end}}</span>
+      </div>
+
+      {{if $.CartQty}}
+      <div class="qty-row">
+        <span class="muted">Sudah di pesanan:</span>
+        <span class="qty-badge-pill">{{$.CartQty}}×</span>
+      </div>
+      {{end}}
+
+      <div class="qty-picker">
+        <button type="button" class="qty-btn" id="qtyMinus" aria-label="Kurangi">−</button>
+        <input id="qtyInput" type="number" value="1" min="1" max="50" aria-label="Jumlah">
+        <button type="button" class="qty-btn" id="qtyPlus" aria-label="Tambah">+</button>
+      </div>
+
+      <div class="field">
+        <label for="noteInput">CATATAN PESANAN</label>
+        <input id="noteInput" type="text" maxlength="160" placeholder="Contoh: “Jangan terlalu pedas”">
+      </div>
+
+      <button class="btn btn-primary btn-lg w100" data-add="{{.ID}}" data-name="{{.Name}}" {{if not .Available}}disabled{{end}}>
+        + TAMBAH KE PESANAN
+      </button>
+      <a href="/menu" class="btn btn-ghost w100">← Kembali ke Menu</a>
+    </div>
+  </div>
+
+  {{if $.Related}}
+  <section class="section">
+    <div class="section-head"><h2>SEKALIAN COBA INI</h2></div>
+    {{template "menuGrid" (dict "Items" $.Related)}}
+  </section>
+  {{end}}
+</section>
+{{end}}
+{{end}}
