@@ -27,7 +27,7 @@ Minangkabau-inspired light & dark UI.
 ## 3. Installation
 
 ```bash
-git clone <this-repo> rantau
+git clone https://github.com/ManuelKy08/nasi-padang.git rantau
 cd rantau
 go mod tidy
 ```
