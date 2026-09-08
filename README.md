@@ -2,6 +2,13 @@
 
 **Raso Minang, Dihati.**
 
+![Go](https://img.shields.io/badge/Go-1.26.2-00ADD8?style=flat-square\&logo=go\&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-MariaDB-4479A1?style=flat-square\&logo=mysql\&logoColor=white)
+![Auth](https://img.shields.io/badge/Auth-Authentication-8A2BE2?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-00b894?style=flat-square)
+
+<a href="https://ibb.co.com/JRv8YFRk"><img src="https://i.ibb.co.com/WWk7rpWK/image.png" alt="image" border="0"></a>
+
 A fully functional **online ordering & restaurant management system** for a
 Padang (Minangkabau) rice restaurant, built with **Go**, **MySQL/MariaDB** and
 vanilla HTML/CSS/JS.
